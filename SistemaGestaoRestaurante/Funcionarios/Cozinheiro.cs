@@ -16,5 +16,14 @@ namespace SistemaGestaoRestaurante.Funcionarios
         {
             Console.WriteLine("Preparando prato...");
         }
-    }
+
+        public void ChamarGarcom()
+        {
+            Console.WriteLine("Chamando garçom...");
+        }
+
+        public override decimal GetBonificacao()
+        {
+            return Salario * 0.15m;
+        }
 }
