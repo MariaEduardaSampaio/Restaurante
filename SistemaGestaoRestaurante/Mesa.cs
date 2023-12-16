@@ -8,5 +8,8 @@ namespace SistemaGestaoRestaurante
 {
     internal class Mesa
     {
+        public int NumeroDaMesa {  get; set; }
+        public  int QuantidadeDeLugares { get; set; }
+
     }
 }

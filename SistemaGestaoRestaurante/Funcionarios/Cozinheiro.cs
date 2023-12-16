@@ -8,9 +8,9 @@ namespace SistemaGestaoRestaurante.Funcionarios
 {
     internal class Cozinheiro : Funcionario
     {
-        public Cozinheiro(string nome, Jornada jornada, decimal salario): base(nome, jornada, salario)
+        public Cozinheiro(string nome, Jornada jornada, decimal salario) : base(nome, jornada, salario)
         {
-            
+
         }
         public void PrepararPrato()
         {
@@ -26,4 +26,5 @@ namespace SistemaGestaoRestaurante.Funcionarios
         {
             return Salario * 0.15m;
         }
+    }
 }
