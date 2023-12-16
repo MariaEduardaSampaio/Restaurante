@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoRestaurante
 {
-    internal class Cardapio
+    internal class Cardapios
     {
         List<Tuple<int, string, decimal>> cardapio = new List<Tuple<int, string, decimal>>
         {
@@ -38,6 +38,19 @@ namespace SistemaGestaoRestaurante
         public void AdicionarPrato(int id, string nome, decimal preco)
         {
             cardapio.Add(new Tuple<int, string, decimal>(id, nome, preco));
+        }
+
+        public bool RetornaID(int id)
+        {
+
+            foreach (var item in cardapio)
+            {
+                if (item.Item1 == id)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
