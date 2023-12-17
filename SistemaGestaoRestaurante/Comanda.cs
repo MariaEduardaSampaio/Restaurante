@@ -12,7 +12,7 @@ namespace SistemaGestaoRestaurante
     {
         public Guid IdComanda { get; private set; }
         public string Cliente { get; private set; }
-        public Mesa Mesa { get; set; }
+        public int IdMesa { get; set; }
         public List<int> Pedidos { get; set; }
         public decimal Valor { get; set; }
         public decimal TaxaDeServico { get; set; }
@@ -22,8 +22,9 @@ namespace SistemaGestaoRestaurante
             IdComanda = Guid.NewGuid();
             this.Cliente = Cliente;
             this.IdMesa = idMesa;
+            Mesa.OcuparMesa(idMesa);
+            Pedidos = new List<int>();
             TaxaDeServico = 0.10m;
-            Mesa.MesaOcupada(idMesa);
         }
 
         public void FecharComanda()
@@ -42,7 +43,7 @@ namespace SistemaGestaoRestaurante
             if (Cardapio.ExistePrato(id))
                 Pedidos.Add(id);
             else
-                throw new Exception("Numero do prato inválido!");
+                throw new Exception("Número do prato inválido!");
         }
     }
 }

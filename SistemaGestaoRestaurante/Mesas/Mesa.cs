@@ -37,7 +37,7 @@ namespace SistemaGestaoRestaurante.Mesas
             Mesas[idMesa] = StatusMesa.AguardandoPrato;
         }
 
-        public static void MesaOcupada(int idMesa)
+        public static void OcuparMesa(int idMesa)
         {
             Mesas[idMesa] = StatusMesa.Ocupada;
         }
