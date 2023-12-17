@@ -15,7 +15,6 @@ namespace SistemaGestaoRestaurante
         public List<int> Pedidos { get; set; }
         public decimal Valor { get; set; }
         public decimal TaxaDeServico { get; set; }
-        public Cardapios Cardapio {  get; set; }
 
         public Comanda(string Cliente, int Mesa) 
         {
@@ -35,16 +34,12 @@ namespace SistemaGestaoRestaurante
             Valor = soma;
         }
 
-        public void FazerPedidos(int id)
+        public void FazerPedido(int id)
         {
-            if (Cardapio.RetornaID(id))
-            {
+            if (Cardapio.ExistePrato(id))
                 Pedidos.Add(id);
-            }
             else
-            {
-                throw new Exception("Numero do prato inválido!");
-            }
+                throw new Exception("Número do prato inválido!");
         }
     }
 }
