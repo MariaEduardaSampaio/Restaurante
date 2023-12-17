@@ -1,116 +1,160 @@
-﻿using System;
+﻿using SistemaGestaoRestaurante.Comandas;
+using System;
 
 namespace SistemaGestaoRestaurante.Mesas
 {
     internal static class Mesa
     {
       
-        public static Dictionary<int, StatusMesa> Mesas = new Dictionary<int, StatusMesa>()
+        public static Dictionary<int, (StatusMesa Status, List<Comanda> Comandas)> Mesas = new()
         {
-            { 01, StatusMesa.Livre },
-            { 02, StatusMesa.Livre },
-            { 03, StatusMesa.Livre },
-            { 04, StatusMesa.Livre },
-            { 05, StatusMesa.Livre },
-            { 06, StatusMesa.Livre },
-            { 07, StatusMesa.Livre },
-            { 08, StatusMesa.Livre },
-            { 09, StatusMesa.Livre },
-            { 10, StatusMesa.Livre },
-            { 11, StatusMesa.Livre },
-            { 12, StatusMesa.Livre },
+            { 01, (StatusMesa.Livre, new List<Comanda>())},
+            { 02, (StatusMesa.Livre, new List<Comanda>())},
+            { 03, (StatusMesa.Livre, new List<Comanda>())},
+            { 04, (StatusMesa.Livre, new List<Comanda>())},
+            { 05, (StatusMesa.Livre, new List<Comanda>())},
+            { 06, (StatusMesa.Livre, new List<Comanda>())},
+            { 07, (StatusMesa.Livre, new List<Comanda>())},
+            { 08, (StatusMesa.Livre, new List<Comanda>())},
+            { 09, (StatusMesa.Livre, new List<Comanda>())},
+            { 10, (StatusMesa.Livre, new List<Comanda>())},
+            { 11, (StatusMesa.Livre, new List<Comanda>())},
+            { 12, (StatusMesa.Livre, new List<Comanda>())},
         };
 
         public static void ReservarMesa(int idMesa)
         {
-            Mesas[idMesa] = StatusMesa.Reservada;
+            if (idMesa > 12 || idMesa < 1)
+                throw new ArgumentException("Não existe mesa com esta identificação.");
+
+            var mesaAtual = Mesas[idMesa];
+            Mesas[idMesa] = (StatusMesa.Reservada, mesaAtual.Comandas);
         }
 
         public static void SolicitarAtendimento(int idMesa)
         {
-            Mesas[idMesa] = StatusMesa.AguardandoAtendimento;
+            if (idMesa > 12 || idMesa < 1)
+                throw new ArgumentException("Não existe mesa com esta identificação.");
+
+            Mesas[idMesa] = (StatusMesa.AguardandoAtendimento, Mesas[idMesa].Comandas);
             Console.WriteLine($"Mesa {idMesa} chamou o garçom");
         }
 
+        /* considerar estas funçoes em vez das outras
+        
+        public static void AtualizarStatus(int idMesa, StatusMesa statusMesa)
+        { 
+            if (idMesa > 12 || idMesa < 1)
+                throw new ArgumentException("Não existe mesa com esta identificação.");
+            Mesas[idMesa] = (statusMesa, Mesas[idMesa].Comandas);
+        }
+
+        public static void ExibirMesasConformeStatus(StatusMesa statusMesa)
+        {
+            foreach (var mesa in Mesas)
+            {
+                if (mesa.Value.Status == statusMesa)
+                    Console.WriteLine($"Mesa: {mesa.Key}");
+            }
+        } */
+
         public static void AguardarPedido(int idMesa)
         {
-            Mesas[idMesa] = StatusMesa.AguardandoPrato;
+            if (idMesa > 12 || idMesa < 1)
+                throw new ArgumentException("Não existe mesa com esta identificação.");
+            Mesas[idMesa] = (StatusMesa.AguardandoPrato, Mesas[idMesa].Comandas);
+        }
+
+        public static void ServirPedido(int idMesa)
+        {
+            if (idMesa > 12 || idMesa < 1)
+                throw new ArgumentException("Não existe mesa com esta identificação.");
+            Mesas[idMesa] = (StatusMesa.Ocupada, Mesas[idMesa].Comandas);
         }
 
         public static void OcuparMesa(int idMesa)
         {
-            Mesas[idMesa] = StatusMesa.Ocupada;
+            if (idMesa > 12 || idMesa < 1)
+                throw new ArgumentException("Não existe mesa com esta identificação.");
+            Mesas[idMesa] = (StatusMesa.Ocupada, Mesas[idMesa].Comandas);
         }
 
         public static void LiberarMesa(int idMesa)
         {
-            Mesas[idMesa] = StatusMesa.Livre;
+            if (idMesa > 12 || idMesa < 1)
+                throw new ArgumentException("Não existe mesa com esta identificação.");
+
+            List<Comanda> comandasMesa = Mesas[idMesa].Comandas;
+            bool todasAsComandasFechadas = comandasMesa.All(comanda => comanda.StatusComanda == StatusComanda.Fechada);
+
+            if (todasAsComandasFechadas)
+                Mesas[idMesa] = (StatusMesa.Livre, comandasMesa);
+            else
+                throw new ArgumentException("Não é possível liberar a mesa se alguma comanda atrelada a ela estiver aberta.");
         }
 
         public static void ExibirMesasAguardandoAtendimento()
         {
             Console.WriteLine("Mesas aguardando atendimento:");
-            foreach (KeyValuePair<int, StatusMesa> mesa in Mesas)
+            foreach (var mesa in Mesas)
             {
-                if (mesa.Value == StatusMesa.AguardandoAtendimento)
-                {
+                if (mesa.Value.Status == StatusMesa.AguardandoAtendimento)
                     Console.WriteLine($"Mesa: {mesa.Key}");
-                }
             }
 
-            if(!Mesas.ContainsValue(StatusMesa.AguardandoAtendimento))
+            if(!Mesas.Values.Any(mesa => mesa.Status == StatusMesa.AguardandoAtendimento))
                 Console.WriteLine("Sem mesas aguardando atendimento.");
         }
 
         public static void ExibirMesasAguardandoPrato()
         {
             Console.WriteLine("Mesas aguardando pedido:");
-            foreach (KeyValuePair<int, StatusMesa> mesa in Mesas)
+            foreach (var mesa in Mesas)
             {
-                if (mesa.Value == StatusMesa.AguardandoPrato)
+                if (mesa.Value.Status == StatusMesa.AguardandoPrato)
                     Console.WriteLine($"Mesa: {mesa.Key}");
             }
 
-            if (!Mesas.ContainsValue(StatusMesa.AguardandoPrato))
+            if (!Mesas.Values.Any(mesa => mesa.Status == StatusMesa.AguardandoPrato))
                 Console.WriteLine("Fila livre.");
         }
 
         public static void ExibirMesasOcupadas()
         {
             Console.WriteLine("Mesas ocupadas:");
-            foreach (KeyValuePair<int, StatusMesa> mesa in Mesas)
+            foreach (var mesa in Mesas)
             {
-                if (mesa.Value == StatusMesa.Ocupada)
+                if (mesa.Value.Status == StatusMesa.Ocupada)
                     Console.WriteLine($"Mesa: {mesa.Key}");
             }
 
-            if (!Mesas.ContainsValue(StatusMesa.Ocupada))
+            if (!Mesas.Values.Any(mesa => mesa.Status == StatusMesa.Ocupada))
                 Console.WriteLine("Nenhuma mesa ocupada.");
         }
 
         public static void ExibirMesasLivres()
         {
             Console.WriteLine("Mesas livres:");
-            foreach (KeyValuePair<int, StatusMesa> mesa in Mesas)
+            foreach (var mesa in Mesas)
             {
-                if (mesa.Value == StatusMesa.Livre)
+                if (mesa.Value.Status == StatusMesa.Livre)
                     Console.WriteLine($"Mesa: {mesa.Key}");
             }
 
-            if (!Mesas.ContainsValue(StatusMesa.Livre))
+            if (!Mesas.Values.Any(mesa => mesa.Status == StatusMesa.Livre))
                 Console.WriteLine("Nenhuma mesa livre.");
         }
 
         public static void ExibirMesasReservadas()
         {
             Console.WriteLine("Mesas reservadas:");
-            foreach (KeyValuePair<int, StatusMesa> mesa in Mesas)
+            foreach (var mesa in Mesas)
             {
-                if (mesa.Value == StatusMesa.Reservada)
+                if (mesa.Value.Status == StatusMesa.Reservada)
                     Console.WriteLine($"Mesa: {mesa.Key}");
             }
 
-            if (!Mesas.ContainsValue(StatusMesa.Reservada))
+            if (!Mesas.Values.Any(mesa => mesa.Status == StatusMesa.Reservada))
                 Console.WriteLine("Fila livre.");
         }
     }
