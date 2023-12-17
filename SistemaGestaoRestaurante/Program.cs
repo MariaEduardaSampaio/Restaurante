@@ -7,13 +7,10 @@ namespace SistemaGestaoRestaurante
     {
         static void Main(string[] args)
         {
-            Cozinheiro cozinheiro = new Cozinheiro("João", Jornada.Noite, 2500);
+            Cozinheiro cozinheiro = new("João", Jornada.Noite, 2500);
 
-            Mesa mesa = new Mesa();
-
-            mesa.ExibirMesasAguardandoAtendimento();
-            mesa.ExibirMesasAguardandoPrato();
-
+            Mesa.ExibirMesasAguardandoAtendimento();
+            Mesa.ExibirMesasAguardandoPrato();
         }
     }
 }

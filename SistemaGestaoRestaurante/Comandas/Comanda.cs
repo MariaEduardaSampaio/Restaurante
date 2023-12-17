@@ -1,10 +1,4 @@
 ﻿using SistemaGestaoRestaurante.Mesas;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SistemaGestaoRestaurante.Comandas
 {
@@ -32,11 +26,11 @@ namespace SistemaGestaoRestaurante.Comandas
         public void FecharComanda()
         {
             decimal soma = 0;
-            foreach (int pedido in Pedidos)
+            foreach (int idPedido in Pedidos)
             {
-                soma += Cardapio.EncontrarPrecoDePrato(pedido);
+                soma += Cardapio.EncontrarPrecoDePrato(idPedido);
             }
-            Valor = soma;
+            Valor = soma * (1 + TaxaDeServico);
             StatusComanda = StatusComanda.Fechada;
         }
 
