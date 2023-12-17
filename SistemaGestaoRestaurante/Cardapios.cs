@@ -8,18 +8,18 @@ namespace SistemaGestaoRestaurante
 {
     internal class Cardapios
     {
-        List<Tuple<int, string, decimal>> cardapio = new List<Tuple<int, string, decimal>>
+        List<(int id, string nome, decimal preco)> cardapio = new List<(int id, string nome, decimal preco)>
         {
-            new Tuple<int, string, decimal>(1, "Arroz", 10.00m),
-            new Tuple<int, string, decimal>(2, "Feijão", 5.00m),
-            new Tuple<int, string, decimal>(3, "Porção de batata frita", 12.00m),
-            new Tuple<int, string, decimal>(4, "Carne de sol", 20.00m),
-            new Tuple<int, string, decimal>(5, "Salada", 15.00m),
-            new Tuple<int, string, decimal>(6, "Torresminho", 15.00m),
-            new Tuple<int, string, decimal>(7, "Macarrão", 15.00m),
-            new Tuple<int, string, decimal>(8, "Mandioca frita", 12.00m),
-            new Tuple<int, string, decimal>(9, "Caldo de feijão", 8.00m),
-            new Tuple<int, string, decimal>(10, "Caldo de mandioca", 8.00m),
+            (1, "Arroz", 10.00m),
+            (2, "Feijão", 5.00m),
+            (3, "Porção de batata frita", 12.00m),
+            (4, "Carne de sol", 20.00m),
+            (5, "Salada", 15.00m),
+            (6, "Torresminho", 15.00m),
+            (7, "Macarrão", 15.00m),
+            (8, "Mandioca frita", 12.00m),
+            (9, "Caldo de feijão", 8.00m),
+            (10, "Caldo de mandioca", 8.00m),
         };
 
         public void MostrarCardapio()
@@ -27,17 +27,17 @@ namespace SistemaGestaoRestaurante
             Console.WriteLine("Cardápio:");
             foreach (var item in cardapio)
             {
-                Console.WriteLine($"{item.Item1} - {item.Item2} - R$ {item.Item3}");
+                Console.WriteLine($"{item.id} - {item.nome} - R$ {item.preco}");
             }
         }
 
         public void RemoverPrato(int id)
         {
-            cardapio.RemoveAll(prato => prato.Item1 == id);
+            cardapio.RemoveAll(prato => prato.id == id);
         }
         public void AdicionarPrato(int id, string nome, decimal preco)
         {
-            cardapio.Add(new Tuple<int, string, decimal>(id, nome, preco));
+            cardapio.Add((id, nome, preco));
         }
 
         public bool RetornaID(int id)
@@ -45,12 +45,18 @@ namespace SistemaGestaoRestaurante
 
             foreach (var item in cardapio)
             {
-                if (item.Item1 == id)
+                if (item.id == id)
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        public decimal EncontrarPrecoDePrato(int idPrato)
+        {
+            (int id, string nome, decimal preco) prato = cardapio.FirstOrDefault(prato => prato.id == idPrato);
+            return prato.preco;
         }
     }
 }
