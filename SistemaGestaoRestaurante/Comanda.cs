@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SistemaGestaoRestaurante.Mesas;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,18 +12,20 @@ namespace SistemaGestaoRestaurante
     {
         public Guid IdComanda { get; private set; }
         public string Cliente { get; private set; }
-        public int Mesa { get; set; }
+        public int IdMesa { get; private set; }
+        public Mesa Mesa { get; set; }
         public List<int> Pedidos { get; set; }
         public decimal Valor { get; set; }
         public decimal TaxaDeServico { get; set; }
         public Cardapios Cardapio {  get; set; }
 
-        public Comanda(string Cliente, int Mesa) 
+        public Comanda(string Cliente, int idMesa) 
         {
             IdComanda = Guid.NewGuid();
             this.Cliente = Cliente;
-            this.Mesa = Mesa;
+            this.IdMesa = idMesa;
             TaxaDeServico = 0.10m;
+            Mesa.MesaOcupada(idMesa);
         }
 
         public void FecharComanda()
@@ -33,6 +36,7 @@ namespace SistemaGestaoRestaurante
                 soma += Cardapio.EncontrarPrecoDePrato(pedido);
             }
             Valor = soma;
+            Mesa.LiberarMesa(IdMesa);
         }
 
         public void FazerPedidos(int id)
@@ -40,11 +44,18 @@ namespace SistemaGestaoRestaurante
             if (Cardapio.RetornaID(id))
             {
                 Pedidos.Add(id);
+                Mesa.AguardarPedido(IdMesa);
+
             }
             else
             {
                 throw new Exception("Numero do prato inválido!");
             }
+        }
+
+        public void ChamarGarcom()
+        {
+            Mesa.SolicitarAtendimento(IdMesa);
         }
     }
 }
