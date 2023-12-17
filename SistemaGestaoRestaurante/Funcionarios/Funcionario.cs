@@ -16,8 +16,6 @@ namespace SistemaGestaoRestaurante.Funcionarios
         public DateTime DataDemissao { get; private set; }
         public decimal Salario { get; set; }
         public bool Ativo {  get; private set; }
-        public Mesa IdMesa { get; private set; }
-        
 
         public Funcionario(string nome, Jornada jornada, decimal salario)
         {
@@ -38,13 +36,5 @@ namespace SistemaGestaoRestaurante.Funcionarios
         {
             return Salario * 0.10m;
         }
-
-        public void ReservarMesa(Mesa idMesa)
-        {
-            this.IdMesa = idMesa;
-            IdMesa.ReservarMesa(Convert.ToInt32(idMesa));
-        }
-
-
     }
 }
