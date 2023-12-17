@@ -34,7 +34,9 @@ namespace SistemaGestaoRestaurante
 
         public static void RemoverPrato(int id)
         {
-            cardapio.RemoveAll(prato => prato.id == id);
+            int pratosRetirados = cardapio.RemoveAll(prato => prato.id == id);
+            if (pratosRetirados == 0)
+                throw new ArgumentException("Não existe prato com este número de identificação!");
         }
 
         public static void AdicionarPrato(string nome, decimal preco)
