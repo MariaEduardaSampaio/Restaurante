@@ -12,12 +12,10 @@ namespace SistemaGestaoRestaurante
     {
         public Guid IdComanda { get; private set; }
         public string Cliente { get; private set; }
-        public int IdMesa { get; private set; }
         public Mesa Mesa { get; set; }
         public List<int> Pedidos { get; set; }
         public decimal Valor { get; set; }
         public decimal TaxaDeServico { get; set; }
-        public Cardapios Cardapio {  get; set; }
 
         public Comanda(string Cliente, int idMesa) 
         {
@@ -39,23 +37,12 @@ namespace SistemaGestaoRestaurante
             Mesa.LiberarMesa(IdMesa);
         }
 
-        public void FazerPedidos(int id)
+        public void FazerPedido(int id)
         {
-            if (Cardapio.RetornaID(id))
-            {
+            if (Cardapio.ExistePrato(id))
                 Pedidos.Add(id);
-                Mesa.AguardarPedido(IdMesa);
-
-            }
             else
-            {
                 throw new Exception("Numero do prato inválido!");
-            }
-        }
-
-        public void ChamarGarcom()
-        {
-            Mesa.SolicitarAtendimento(IdMesa);
         }
     }
 }
