@@ -7,7 +7,6 @@ namespace SistemaGestaoRestaurante
     public static class Cardapio
     {
         private static int ultimoId = 10; 
-        // ultimo id é 10 pq é o id do ultimo item da lista cardapio
 
         public static List<(int id, string nome, decimal preco)> cardapio = new()
         {
@@ -48,7 +47,6 @@ namespace SistemaGestaoRestaurante
         public static bool ExistePrato(int id)
         {
             return cardapio.Exists(prato => prato.id == id); 
-            // existe uma função na lista pra verificar se existe!! oh vida boa
         }
 
         public static decimal EncontrarPrecoDePrato(int idPrato)

@@ -10,11 +10,11 @@ namespace SistemaGestaoRestaurante.Funcionarios
     public class Funcionario
     {
         public readonly Guid Id;
-        public string Nome { get; set; }
-        public Jornada Jornada { get; set; }
+        public string Nome { get; private set; }
+        public Jornada Jornada { get; private set; }
         public DateTime DataAdmissao { get; }
         public DateTime DataDemissao { get; private set; }
-        public decimal Salario { get; set; }
+        public decimal Salario { get; private set; }
         public bool Ativo {  get; private set; }
 
         public Funcionario(string nome, Jornada jornada, decimal salario)

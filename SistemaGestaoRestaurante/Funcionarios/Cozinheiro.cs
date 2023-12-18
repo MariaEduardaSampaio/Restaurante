@@ -12,23 +12,23 @@ namespace SistemaGestaoRestaurante.Funcionarios
         {
 
         }
-        public static void PrepararPrato()
+        public void PrepararPrato()
         {
             Console.WriteLine("Preparando prato...");
         }
 
-        public static void ChamarGarcom()
+        public void ChamarGarcom()
         {
             Console.WriteLine("Chamando garçom...");
         }
 
-        public static void AdicionarPratoCardapio(string nome, decimal preco)
+        public void AdicionarPratoCardapio(string nome, decimal preco)
         {
             Cardapio.AdicionarPrato(nome, preco);
             Console.WriteLine($"Prato {nome} adicionado ao cardápio!");
         }
 
-        public static void RetirarPratoCardapio(int idPrato)
+        public void RetirarPratoCardapio(int idPrato)
         {
             try {
                 Cardapio.RemoverPrato(idPrato);

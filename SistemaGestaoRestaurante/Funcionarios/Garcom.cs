@@ -10,11 +10,11 @@ namespace SistemaGestaoRestaurante.Funcionarios
 {
     public class Garcom : Funcionario
     {
-        public Garcom(string nome, Jornada jornada, decimal salario) : base(nome, jornada, salario)
+        public Garcom(string? nome, Jornada jornada, decimal salario) : base(nome, jornada, salario)
         {
         }
 
-        public static void ReservarMesa(int idMesa)
+        public void ReservarMesa(int idMesa)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace SistemaGestaoRestaurante.Funcionarios
             }
         }
 
-        public static void LiberarMesa(int idMesa)
+        public void LiberarMesa(int idMesa)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace SistemaGestaoRestaurante.Funcionarios
             }
         }
 
-        public static void AtenderCliente(Comanda comanda, int idPedido)
+        public void AtenderCliente(Comanda comanda, int idPedido)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace SistemaGestaoRestaurante.Funcionarios
             }
         }
 
-        public static void ServirCliente(Comanda comanda)
+        public void ServirCliente(Comanda comanda)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace SistemaGestaoRestaurante.Funcionarios
             }
         }
 
-        public static void FecharComanda(Comanda comanda)
+        public void FecharComanda(Comanda comanda)
         {
             try
             {

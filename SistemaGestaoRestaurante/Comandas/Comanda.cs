@@ -37,7 +37,10 @@ namespace SistemaGestaoRestaurante.Comandas
         public void FazerPedido(int id)
         {
             if (Cardapio.ExistePrato(id))
+            {
                 Pedidos.Add(id);
+                Mesa.AguardarPedido(id);
+            }
             else
                 throw new Exception("Número do prato inválido!");
         }
