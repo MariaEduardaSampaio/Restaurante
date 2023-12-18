@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoRestaurante.Comandas
 {
-    internal class Comanda
+    public class Comanda
     {
         public Guid IdComanda { get; private set; }
         public StatusComanda StatusComanda { get; private set; }

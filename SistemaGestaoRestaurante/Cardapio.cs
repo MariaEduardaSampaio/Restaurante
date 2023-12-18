@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SistemaGestaoRestaurante
 {
-    internal static class Cardapio
+    public static class Cardapio
     {
         private static int ultimoId = 10; 
         // ultimo id é 10 pq é o id do ultimo item da lista cardapio

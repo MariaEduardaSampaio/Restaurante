@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoRestaurante.Funcionarios
 {
-    internal class Funcionario
+    public class Funcionario
     {
         public readonly Guid Id;
         public string Nome { get; set; }

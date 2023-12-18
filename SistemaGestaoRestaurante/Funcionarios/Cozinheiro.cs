@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoRestaurante.Funcionarios
 {
-    internal class Cozinheiro : Funcionario
+    public class Cozinheiro : Funcionario
     {
         public Cozinheiro(string nome, Jornada jornada, decimal salario) : base(nome, jornada, salario)
         {

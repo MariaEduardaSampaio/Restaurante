@@ -1,4 +1,4 @@
-﻿enum Jornada
+﻿public enum Jornada
 {
     Manha = 1,
     Tarde = 2,
